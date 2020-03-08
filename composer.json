@@ -23,11 +23,21 @@
   },
   "scripts": {
     "post-create-project-cmd": [
+
       "@php -r \"copy('craftcms/.env.example', 'craftcms/.env');\"",
       "@php -r \"unlink('composer.json');\"",
       "@php -r \"unlink('LICENSE.md');\"",
       "@php -r \"unlink('README.md');\"",
       "@php -r \"rename('composer.default.json', 'composer.json');\"",
+
+      "@php -r \"chmod('craftcms/.env', 0774);\"",
+      "@php -r \"chmod('composer.json', 0774);\"",
+      "@php -r \"chmod('composer.lock', 0774);\"",
+      "@php -r \"chmod('config/license.key', 0774);\"",
+      "@php -r \"chmod('craftcms/storage/*', 0774);\"",
+      "@php -r \"chmod('craftcms/vendor/*', 0774);\"",
+      "@php -r \"chmod('public/cpresources/*', 0774);\"",
+
       "@composer dump-autoload -o",
       "@php craftcms/craft setup/welcome"
     ]
