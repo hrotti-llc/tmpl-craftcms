@@ -1,9 +1,8 @@
 {
-  "name": "craftcms/craft",
-  "description": "Craft CMS",
+  "name": "hrotti/craft",
+  "description": "Craft CMS Scaffolding Template",
   "keywords": [],
   "license": "Unlicense",
-  "homepage": "https://craftcms.com/",
   "type": "project",
   "support": {},
   "require": {
@@ -24,7 +23,7 @@
   },
   "scripts": {
     "post-create-project-cmd": [
-      "@php -r \"copy('.env.example', '.env');\"",
+      "@php -r \"copy('craftcms/.env.example', 'craftcms/.env');\"",
       "@php -r \"unlink('composer.json');\"",
       "@php -r \"unlink('LICENSE.md');\"",
       "@php -r \"unlink('README.md');\"",
