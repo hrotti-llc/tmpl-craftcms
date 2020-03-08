@@ -1,48 +1,31 @@
 <?php
-/**
- * General Configuration
- *
- * All of your system's general configuration settings go in here. You can see a
- * list of the available settings in vendor/craftcms/cms/src/config/GeneralConfig.php.
- *
- * @see \craft\config\GeneralConfig
- */
 
 return [
-    // Global settings
-    '*' => [
-        // Default Week Start Day (0 = Sunday, 1 = Monday...)
-        'defaultWeekStartDay' => 1,
 
-        // Whether generated URLs should omit "index.php"
-        'omitScriptNameInUrls' => true,
+	'*' => [
 
-        // Control Panel trigger word
-        'cpTrigger' => 'admin',
+		'defaultWeekStartDay' => 1,
 
-        // The secure key Craft will use for hashing and encrypting data
-        'securityKey' => getenv('SECURITY_KEY'),
+		'omitScriptNameInUrls' => true,
 
-        // Whether to save the project config out to config/project.yaml
-        // (see https://docs.craftcms.com/v3/project-config.html)
-        'useProjectConfigFile' => false,
-    ],
+		'cpTrigger' => 'cp',
 
-    // Dev environment settings
-    'dev' => [
-        // Dev Mode (see https://craftcms.com/guides/what-dev-mode-does)
-        'devMode' => true,
-    ],
+		'securityKey' => getenv('SECURITY_KEY'),
 
-    // Staging environment settings
-    'staging' => [
-        // Set this to `false` to prevent administrative changes from being made on staging
-        'allowAdminChanges' => true,
-    ],
+		'useProjectConfigFile' => false,
 
-    // Production environment settings
-    'production' => [
-        // Set this to `false` to prevent administrative changes from being made on production
-        'allowAdminChanges' => true,
-    ],
+	],
+
+	'dev' => [
+		'devMode' => true,
+	],
+
+	'staging' => [
+		'allowAdminChanges' => true,
+	],
+
+	'production' => [
+		'allowAdminChanges' => true,
+	],
+	
 ];
