@@ -1,23 +1,11 @@
 {
   "name": "craftcms/craft",
   "description": "Craft CMS",
-  "keywords": [
-    "craft",
-    "cms",
-    "craftcms",
-    "project"
-  ],
+  "keywords": [],
   "license": "Unlicense",
   "homepage": "https://craftcms.com/",
   "type": "project",
-  "support": {
-    "email": "support@craftcms.com",
-    "issues": "https://github.com/craftcms/cms/issues",
-    "forum": "https://craftcms.stackexchange.com/",
-    "source": "https://github.com/craftcms/cms",
-    "docs": "https://craftcms.com/docs",
-    "rss": "https://craftcms.com/changelog.rss"
-  },
+  "support": {},
   "require": {
     "craftcms/cms": "^3.4.0",
     "vlucas/phpdotenv": "^3.4.0"
@@ -31,7 +19,8 @@
     "optimize-autoloader": true,
     "platform": {
       "php": "7.0"
-    }
+    },
+    "vendor-dir": "craftcms/vendor"
   },
   "scripts": {
     "post-create-project-cmd": [
