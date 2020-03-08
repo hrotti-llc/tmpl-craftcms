@@ -1,24 +1,33 @@
 {
+
   "require": {
     "craftcms/cms": "^3.4.0",
     "vlucas/phpdotenv": "^3.4.0"
   },
+
   "autoload": {
     "psr-4": {
       "modules\\": "modules/"
     }
   },
+
   "config": {
+
     "sort-packages": true,
     "optimize-autoloader": true,
     "platform": {
       "php": "7.0"
 		},
-		"vendor-dir": "craftcms/vendor"
+    "vendor-dir": "craftcms/vendor"
+    
   },
+
   "scripts": {
+
     "post-root-package-install": [
       "@php -r \"file_exists('.env') || copy('craftcms/.env.example', 'craftcms/.env');\""
     ]
+
   }
+
 }
