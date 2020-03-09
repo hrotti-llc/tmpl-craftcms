@@ -1,0 +1,30 @@
+
+{# Header #}
+
+{% if not craft.request.isAjax %}
+
+	{% include "__outline/doc_header.twig" %}
+	{% include "__outline/content_header.twig" %}
+
+{% endif %}
+
+
+
+{# Content #}
+
+{% if craft.request.isAjax %}
+
+	{% block page %}{% endblock %}
+
+{% endif %}
+
+
+
+{# Footer #}
+
+{% if not craft.request.isAjax %}
+
+	{% include "__outline/content_footer.twig" %}
+	{% include "__outline/doc_footer.twig" %}
+
+{% endif %}

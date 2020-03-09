@@ -34,7 +34,8 @@
       "@php -r \"copy('craftcms/.env.example', 'craftcms/.env');\"",
       "@php -r \"unlink('composer.json');\"",
       "@php -r \"unlink('LICENSE.md');\"",
-      "@php -r \"unlink('README.md');\"",
+      "@php -r \"unlink('public/cpresources/.gitkeep');\"",
+
       "@php -r \"rename('composer.default.json', 'composer.json');\"",
 
       "@php -r \"chmod('craftcms/.env', 0774);\"",
