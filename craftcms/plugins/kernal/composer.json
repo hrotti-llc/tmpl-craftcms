@@ -1,0 +1,44 @@
+{
+    "name": "hrotti/kernal",
+    "description": "This is the internal plugin for this project. Not for public distribution.",
+    "type": "craft-plugin",
+    "version": "1.0.2",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jesse Finn",
+            "homepage": "https://jessefinn.com"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+          "hrotti\\kernal\\": "src/"
+        }
+    },
+    "extra": {
+
+        "name": "Kernal",
+        "handle": "kernal",
+
+        "developer": "Hrotti",
+        "developerUrl": "https://hrotti.com",
+
+        "hasCpSettings": false,
+        "hasCpSection": false,
+
+        "components": {
+        },
+
+        "class": "hrotti\\kernal\\Kernal"
+        
+    }
+}

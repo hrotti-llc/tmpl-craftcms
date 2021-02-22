@@ -18,14 +18,17 @@ return [
 
 	'dev' => [
 		'devMode' => true,
+		'userSessionDuration' => 0
 	],
 
 	'staging' => [
 		'allowAdminChanges' => true,
+		'userSessionDuration' => 0
 	],
 
 	'production' => [
 		'allowAdminChanges' => true,
+		'userSessionDuration' => 3600
 	],
 	
 ];

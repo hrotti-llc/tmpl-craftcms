@@ -1,6 +1,13 @@
 
+	{# {% set menu = craft.globals().getSetByHandle('primaryMenu') %}
+	{% set items = menu.menuItems.type('menuItem') %} #}
+
 	<body>
 
-		<div class="ux viewport" id="main">
+		<div class="ui-viewport" id="main">
 
-			<div class="ux view main">
+			{% if currentUser %}
+
+			<div class="ui-view main" id="app">
+
+			{% endif %}
