@@ -1,6 +1,0 @@
-{
-	"buttons": ["html"],
-	"plugins": ["fullscreen"],
-	"linkNewTab": true,
-	"toolbarFixed": true
-}
