@@ -8,26 +8,32 @@
   "support": {},
 
   "require": {
-    "andreas83/craft-countryselect": "^1.2",
-    "barrelstrength/sprout-fields": "^3.8.4",
+
     "craftcms/cms": "^3.6.0",
-    "craftcms/redactor": "^2.8.5",
+    "vlucas/phpdotenv": "^3.4.0",
+
     "doublesecretagency/craft-cpcss": "^2.3.0",
-    "ether/seo": "3.6.7",
-    "mmikkel/incognito-field": "^1.2.0",
-    "mmikkel/reasons": "^2.2.4",
     "ostark/craft-async-queue": "^2.1.1",
     "panlatent/schedule": "^0.2.2",
     "pennebaker/craft-architect": "^2.4.0",
+    "verbb/cp-nav": "^3.0.13.1",
+    "verbb/field-manager": "^2.2.2",
+    "verbb/super-table": "^2.6.5",
+
+    "mmikkel/incognito-field": "^1.2.0",
+    "mmikkel/reasons": "^2.2.4",
+    "ether/seo": "^3.6.7",
+
+    "craftcms/redactor": "^2.8.5",
     "svenjungnickel/redactor-font-awesome": "^2.1.1",
     "utakka/redactor-anchors": "^1.1.0",
     "venveo/craft-redactor-split": "^1.1.0",
-    "verbb/cp-nav": "^3.0.13.1",
-    "verbb/field-manager": "^2.2.2",
     "verbb/redactor-tweaks": "^2.0.4",
-    "verbb/super-table": "^2.6.5",
-    "vlucas/phpdotenv": "^3.4.0",
-    "hrotti/kernal": "^1.0.1"
+
+    "hrotti/kernal": "^1.0.1",
+
+    "spicyweb/craft-neo": "^2.9.5"
+    
   },
 
   "autoload": {
@@ -70,7 +76,7 @@
       "@php -r \"chmod('craftcms/.env', 0774);\"",
       "@php -r \"chmod('composer.json', 0774);\"",
       "@php -r \"chmod('composer.lock', 0774);\"",
-      "@php -r \"chmod('config/license.key', 0774);\"",
+      "@php -r \"chmod('craftcms/config/license.key', 0774);\"",
       "@php -r \"chmod('craftcms/storage/*', 0774);\"",
       "@php -r \"chmod('craftcms/vendor/*', 0774);\"",
       "@php -r \"chmod('public/cpresources/*', 0774);\"",

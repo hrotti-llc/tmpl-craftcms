@@ -1,11 +1,14 @@
 <?php
 
-namespace hrotti\kernal\helpers;
+namespace hrotti\poleconnect\helpers;
 
 use Craft;
 
 use craft\elements\Tag;
 use craft\elements\db\TagQuery;
+
+use craft\elements\Category;
+use craft\elements\db\CategoryQuery;
 
 use craft\web\Request;
 
@@ -20,12 +23,14 @@ trait CommonServiceHelper {
 
 	public $plugin;
 
+	public $debugging = [];
+
 	// Public Methods
 	// =========================================================================
 
 	public function outlineFields() {
 
-		$this->plugin = Craft::$app->plugins->getPlugin('kernal');
+		$this->plugin = Craft::$app->plugins->getPlugin('poleconnect');
 
 		if ($this->section) {
 
@@ -192,10 +197,17 @@ trait CommonServiceHelper {
 				} else if (get_class($entry[$handle]) == 'mmikkel\incognitofield\IncognitoField') {
 
 					$data[$field] = $entry[$handle];
-
+					
 				} else {
 
-					$data[$field] = null;
+					try {
+
+						$data[$field] = null;
+
+					} catch (\Exception $E) {
+
+
+					}
 					//$data[$field] = get_class($entry[$handle]);
 
 				}
@@ -209,6 +221,52 @@ trait CommonServiceHelper {
 		}
 
 		return $data;
+
+	}
+
+	public function getCategories($keywords, $group) {
+
+		if (is_string($group)) $group = Craft::$app->categories->getGroupByHandle($group)->id;
+
+		$query = new CategoryQuery(Category::class);
+
+		$query->groupId = $group;
+		$query->title = $keywords;
+
+		return $query;
+
+	}
+
+	public function getCategoryIds($keywords, $group) {
+
+		return array_map(
+			function($item) { return $item->id; },
+			$this->getCategories($keywords, $group)->all()
+		);
+
+	}
+
+
+	public function getTags($keywords, $group) {
+
+		if (is_string($group)) $group = Craft::$app->tags->getTagGroupByHandle($group)->id;
+
+		$tagQuery = new TagQuery(Tag::class);
+
+		$tagQuery->groupId = $group;
+		$tagQuery->title = $keywords;
+
+		return $tagQuery;
+
+
+	}
+
+	public function getTagIds($keywords, $group) {
+
+		return array_map(
+			function($item) { return $item->id; },
+			$this->getTags($keywords, $group)->all()
+		);
 
 	}
 
@@ -238,6 +296,58 @@ trait CommonServiceHelper {
 
 	}
 
+	public function resolveFilters($request) {
+
+		$ignore = [];
+
+		$settings = $request->resolve()[1];
+		$filters = array_filter(
+			$settings, 
+			function ($k) use ($ignore) { return !in_array($k, $ignore); },
+			ARRAY_FILTER_USE_KEY
+		);
+
+		return $filters;
+
+	}
+
+	public function resolveCommonFilters($request, $limit = -1, $page = 1) {
+
+		$ignore = ['limit', 'page'];
+
+		$settings = $request->resolve()[1];
+		$filters = array_filter(
+			$settings, 
+			function ($k) use ($ignore) { return !in_array($k, $ignore); },
+			ARRAY_FILTER_USE_KEY
+		);
+
+		$filters['limit'] = array_key_exists('limit', $settings)
+			? $settings['limit'] : $limit;
+
+		$filters['page'] = array_key_exists('page', $settings)
+			? $settings['page'] : $page;
+
+		return $filters;
+
+	}
+	
+	public function normalizeSortingCriteria($criteria) {
+		
+		return array_column(array_map(function ($value) {
+
+			$order = explode(',', str_replace(' ', '', $value));
+
+			if (count($order) == 1) $order[] = 'asc';
+
+			$order[1] = strtoupper($order[1]);
+
+			return $order;
+
+		}, $criteria), 1, 0);
+
+	}
+	
 	// Protected Methods
 	// =========================================================================
 
