@@ -1,7 +1,7 @@
 <?php
 
 return [
-	'api' => 'graphql/api',
-	'' => ['template' => 'home'],
-	'<page:{slug}>' => ['template' => 'home']
+    'api' => 'graphql/api',
+    '' => ['template' => 'home'],
+    '<page:{slug}>' => ['template' => 'home']
 ];

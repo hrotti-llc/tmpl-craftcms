@@ -2,33 +2,33 @@
 
 return [
 
-	'*' => [
+    '*' => [
 
-		'defaultWeekStartDay' => 1,
+        'defaultWeekStartDay' => 1,
 
-		'omitScriptNameInUrls' => true,
+        'omitScriptNameInUrls' => true,
 
-		'cpTrigger' => 'cp',
+        'cpTrigger' => 'cp',
 
-		'securityKey' => getenv('SECURITY_KEY'),
+        'securityKey' => getenv('SECURITY_KEY'),
 
-		'useProjectConfigFile' => false,
+        'useProjectConfigFile' => false,
 
-	],
+    ],
 
-	'dev' => [
-		'devMode' => true,
-		'userSessionDuration' => 0
-	],
+    'dev' => [
+        'devMode' => true,
+        'userSessionDuration' => 0
+    ],
 
-	'staging' => [
-		'allowAdminChanges' => true,
-		'userSessionDuration' => 0
-	],
+    'staging' => [
+        'allowAdminChanges' => true,
+        'userSessionDuration' => 0
+    ],
 
-	'production' => [
-		'allowAdminChanges' => true,
-		'userSessionDuration' => 3600
-	],
-	
+    'production' => [
+        'allowAdminChanges' => true,
+        'userSessionDuration' => 3600
+    ],
+    
 ];

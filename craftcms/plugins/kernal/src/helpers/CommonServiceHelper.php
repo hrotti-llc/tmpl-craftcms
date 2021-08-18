@@ -11,178 +11,178 @@ use craft\elements\db\TagQuery;
 
 class CommonService extends \hrotti\kernal\helpers\BaseService {
 
-	public $builtinFields = ['id', 'expiryDate', 'sectionId', 'typeId', 'authorId', 'title', 'slug'];
-	public $sectionFields = [];
-	public $sectionExtraFields = [];
-	public $availableFields;
+    public $builtinFields = ['id', 'expiryDate', 'sectionId', 'typeId', 'authorId', 'title', 'slug'];
+    public $sectionFields = [];
+    public $sectionExtraFields = [];
+    public $availableFields;
 
-	public $fields = [];
+    public $fields = [];
 
-	// Public Methods
-	// =========================================================================
+    // Public Methods
+    // =========================================================================
 
-	public function outlineFields() {
+    public function outlineFields() {
 
-		if ($this->section) {
+        if ($this->section) {
 
-			if (is_string($this->section)) $this->section = Craft::$app->sections->getSectionByHandle($this->section);
+            if (is_string($this->section)) $this->section = Craft::$app->sections->getSectionByHandle($this->section);
 
-			$this->sectionFields = array_map(
-				function ($field) { return $field->handle; },
-				$this->section->getEntryTypes($this->section->handle)[0]->getFieldLayout()->getFields()
-			);
+            $this->sectionFields = array_map(
+                function ($field) { return $field->handle; },
+                $this->section->getEntryTypes($this->section->handle)[0]->getFieldLayout()->getFields()
+            );
 
-		}
+        }
 
-		$this->availableFields = array_merge($this->builtinFields, $this->sectionFields, $this->sectionExtraFields);
+        $this->availableFields = array_merge($this->builtinFields, $this->sectionFields, $this->sectionExtraFields);
 
-	}
+    }
 
-	public function getCategories(
-		$keywords, 
-		$group
-	) {
+    public function getCategories(
+        $keywords, 
+        $group
+    ) {
 
-		if (is_string($group)) $group = Craft::$app->categories->getGroupByHandle($group)->id;
+        if (is_string($group)) $group = Craft::$app->categories->getGroupByHandle($group)->id;
 
-		$query = new CategoryQuery(Category::class);
+        $query = new CategoryQuery(Category::class);
 
-		$query->groupId = $group;
-		$query->title = $keywords;
+        $query->groupId = $group;
+        $query->title = $keywords;
 
-		return $query;
+        return $query;
 
-	}
+    }
 
-	public function getCategoryIds(
-		$keywords, 
-		$group
-	) {
+    public function getCategoryIds(
+        $keywords, 
+        $group
+    ) {
 
-		return array_map(
-			function($item) { return $item->id; },
-			$this->getCategories($keywords, $group)->all()
-		);
+        return array_map(
+            function($item) { return $item->id; },
+            $this->getCategories($keywords, $group)->all()
+        );
 
-	}
-
-
-	public function getTags(
-		$keywords, 
-		$group
-	) {
-
-		if (is_string($group)) $group = Craft::$app->tags->getTagGroupByHandle($group)->id;
-
-		$tagQuery = new TagQuery(Tag::class);
-
-		$tagQuery->groupId = $group;
-		$tagQuery->title = $keywords;
-
-		return $tagQuery;
+    }
 
 
-	}
+    public function getTags(
+        $keywords, 
+        $group
+    ) {
 
-	public function getTagIds(
-		$keywords, 
-		$group
-	) {
+        if (is_string($group)) $group = Craft::$app->tags->getTagGroupByHandle($group)->id;
 
-		return array_map(
-			function($item) { return $item->id; },
-			$this->getTags($keywords, $group)->all()
-		);
+        $tagQuery = new TagQuery(Tag::class);
 
-	}
+        $tagQuery->groupId = $group;
+        $tagQuery->title = $keywords;
 
-	public function createOrGetTag(
-		$keyword, 
-		$group
-	) {
+        return $tagQuery;
 
-		if (is_string($group)) $group = Craft::$app->tags->getTagGroupByHandle($group)->id;
 
-		$tagQuery = new TagQuery(Tag::class);
+    }
 
-		$tagQuery->groupId = $group;
-		$tagQuery->title = $keyword;
+    public function getTagIds(
+        $keywords, 
+        $group
+    ) {
 
-		$tag = $tagQuery->one();
+        return array_map(
+            function($item) { return $item->id; },
+            $this->getTags($keywords, $group)->all()
+        );
 
-		if (!$tag) {
+    }
 
-			$tag = new Tag();
+    public function createOrGetTag(
+        $keyword, 
+        $group
+    ) {
 
-			$tag->groupId = $group;
-			$tag->title = $keyword;
+        if (is_string($group)) $group = Craft::$app->tags->getTagGroupByHandle($group)->id;
 
-			Craft::$app->elements->saveElement($tag);
+        $tagQuery = new TagQuery(Tag::class);
 
-		}
+        $tagQuery->groupId = $group;
+        $tagQuery->title = $keyword;
 
-		return $tag;
+        $tag = $tagQuery->one();
 
-	}
+        if (!$tag) {
 
-	public function resolveFilters(
-		$request
-	) {
+            $tag = new Tag();
 
-		$ignore = [];
+            $tag->groupId = $group;
+            $tag->title = $keyword;
 
-		$settings = $request->resolve()[1];
-		$filters = array_filter(
-			$settings, 
-			function ($k) use ($ignore) { return !in_array($k, $ignore); },
-			ARRAY_FILTER_USE_KEY
-		);
+            Craft::$app->elements->saveElement($tag);
 
-		return $filters;
+        }
 
-	}
+        return $tag;
 
-	public function resolveCommonFilters(
-		$request, 
-		$limit = -1, 
-		$page = 1
-	) {
+    }
 
-		$ignore = ['limit', 'page'];
+    public function resolveFilters(
+        $request
+    ) {
 
-		$settings = $request->resolve()[1];
-		$filters = array_filter(
-			$settings, 
-			function ($k) use ($ignore) { return !in_array($k, $ignore); },
-			ARRAY_FILTER_USE_KEY
-		);
+        $ignore = [];
 
-		$filters['limit'] = array_key_exists('limit', $settings)
-			? $settings['limit'] : $limit;
+        $settings = $request->resolve()[1];
+        $filters = array_filter(
+            $settings, 
+            function ($k) use ($ignore) { return !in_array($k, $ignore); },
+            ARRAY_FILTER_USE_KEY
+        );
 
-		$filters['page'] = array_key_exists('page', $settings)
-			? $settings['page'] : $page;
+        return $filters;
 
-		return $filters;
+    }
 
-	}
-	
-	public function normalizeSortingCriteria(
-		$criteria
-	) {
-		
-		return array_column(array_map(function ($value) {
+    public function resolveCommonFilters(
+        $request, 
+        $limit = -1, 
+        $page = 1
+    ) {
 
-			$order = explode(',', str_replace(' ', '', $value));
+        $ignore = ['limit', 'page'];
 
-			if (count($order) == 1) $order[] = 'asc';
+        $settings = $request->resolve()[1];
+        $filters = array_filter(
+            $settings, 
+            function ($k) use ($ignore) { return !in_array($k, $ignore); },
+            ARRAY_FILTER_USE_KEY
+        );
 
-			$order[1] = strtoupper($order[1]);
+        $filters['limit'] = array_key_exists('limit', $settings)
+            ? $settings['limit'] : $limit;
 
-			return $order;
+        $filters['page'] = array_key_exists('page', $settings)
+            ? $settings['page'] : $page;
 
-		}, $criteria), 1, 0);
+        return $filters;
 
-	}
-	
+    }
+    
+    public function normalizeSortingCriteria(
+        $criteria
+    ) {
+        
+        return array_column(array_map(function ($value) {
+
+            $order = explode(',', str_replace(' ', '', $value));
+
+            if (count($order) == 1) $order[] = 'asc';
+
+            $order[1] = strtoupper($order[1]);
+
+            return $order;
+
+        }, $criteria), 1, 0);
+
+    }
+    
 }

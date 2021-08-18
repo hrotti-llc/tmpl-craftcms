@@ -13,186 +13,186 @@ use Lcobucci\JWT\Validation\Constraint\IdentifiedBy;
 
 trait SecurityHelper {
 
-	public function getProjectSecretKey(): string {
-	
-		return Craft::$app->getConfig()->getGeneral()->securityKey;
+    public function getProjectSecretKey(): string {
+    
+        return Craft::$app->getConfig()->getGeneral()->securityKey;
 
-	}
-	
-	public function encrypt(
-		string $value, 
-		string $salt = null, 
-		bool $baseEncode = true
-	) {
+    }
+    
+    public function encrypt(
+        string $value, 
+        string $salt = null, 
+        bool $baseEncode = true
+    ) {
 
-		$encrypted = \Craft::$app->getSecurity()->encryptByKey($value, $this->getProjectSecretKey().$salt);
+        $encrypted = \Craft::$app->getSecurity()->encryptByKey($value, $this->getProjectSecretKey().$salt);
 
-		return $baseEncode ? base64_encode($encrypted) : $encrypted;
+        return $baseEncode ? base64_encode($encrypted) : $encrypted;
 
-	}
+    }
 
-	public function getJWTRequest(
-		$request
-	) {
+    public function getJWTRequest(
+        $request
+    ) {
 
-		return new JWTRequest($request);
+        return new JWTRequest($request);
 
-	}
+    }
 
-	public function isAuthorizedAPIRequest(
-		$request
-	) {
+    public function isAuthorizedAPIRequest(
+        $request
+    ) {
 
-		$this->auth = $this->getJWTRequest($request);
+        $this->auth = $this->getJWTRequest($request);
 
-		if ($this->auth->validate()) {
-			
-			return true;
+        if ($this->auth->validate()) {
+            
+            return true;
 
-		} else {
+        } else {
 
-			return false;
+            return false;
 
-		}
+        }
 
-	}
+    }
 
-	public function getCsrfName() {
+    public function getCsrfName() {
 
-		return Craft::$app->config->general->csrfTokenName;
+        return Craft::$app->config->general->csrfTokenName;
 
-	}
+    }
 
-	public function getCurrentCsrfToken() {
+    public function getCurrentCsrfToken() {
 
-		return Craft::$app->request->getCsrfToken();
+        return Craft::$app->request->getCsrfToken();
 
-	}
+    }
 
-	public function getNewCsrfToken() {
+    public function getNewCsrfToken() {
 
-		return Craft::$app->tokens->createToken('users/login');
+        return Craft::$app->tokens->createToken('users/login');
 
-	}
+    }
 
-	public function getCsrfBasics() {
+    public function getCsrfBasics() {
 
-		return [
-			'name' => $this->getCsrfName(),
-			'token' => $this->getCurrentCsrfToken()
-		];
+        return [
+            'name' => $this->getCsrfName(),
+            'token' => $this->getCurrentCsrfToken()
+        ];
 
-	}
+    }
 
 }
 
 class JWTRequest {
 
-	public $config;
-	public $request;
+    public $config;
+    public $request;
 
-	public $errors = [];
+    public $errors = [];
 
-	public $isValid = null;
+    public $isValid = null;
 
-	public function __construct(
-		$request, 
-		$config = null
-	) {
+    public function __construct(
+        $request, 
+        $config = null
+    ) {
 
-		$this->request = $request;
-		$this->config = $config ?? $this->configure();
+        $this->request = $request;
+        $this->config = $config ?? $this->configure();
 
-	}
+    }
 
-	public function getSecretKey() : string {
-		
-		return getenv('JWT_SECRET_KEY');
+    public function getSecretKey() : string {
+        
+        return getenv('JWT_SECRET_KEY');
 
-	}
+    }
 
-	public function configure(
-		$symmetric = true
-	) {
+    public function configure(
+        $symmetric = true
+    ) {
 
-		$config = null;
+        $config = null;
 
-		if ($symmetric) {
+        if ($symmetric) {
 
-			$config = Configuration::forSymmetricSigner(
-				new Sha256(),
-				InMemory::base64Encoded(base64_encode($this->getSecretKey()))
-			);
+            $config = Configuration::forSymmetricSigner(
+                new Sha256(),
+                InMemory::base64Encoded(base64_encode($this->getSecretKey()))
+            );
 
-		}
+        }
 
-		return $config;
+        return $config;
 
-	}
+    }
 
-	public function issue() {
+    public function issue() {
 
-		$now = new \DateTimeImmutable();
+        $now = new \DateTimeImmutable();
 
-		$token = $this->config->builder()
-			->issuedBy(getenv("PRIMARY_SITE_URL"))
-			->permittedFor(getenv("PRIMARY_SITE_URL"))
-			->issuedAt($now)
-			->expiresAt($now->modify('+2 hours'))
-			->identifiedBy(getenv('APP_ID'))
-			->getToken($this->config->signer(), $this->config->signingKey());
+        $token = $this->config->builder()
+            ->issuedBy(getenv("PRIMARY_SITE_URL"))
+            ->permittedFor(getenv("PRIMARY_SITE_URL"))
+            ->issuedAt($now)
+            ->expiresAt($now->modify('+2 hours'))
+            ->identifiedBy(getenv('APP_ID'))
+            ->getToken($this->config->signer(), $this->config->signingKey());
 
-			$token->headers()->all();
+            $token->headers()->all();
 
-		return $token;
+        return $token;
 
-	}
+    }
 
-	public function parse() {
+    public function parse() {
 
-		$token = $this->config->parser()->parse($this->request->headers->get('authorization'));
+        $token = $this->config->parser()->parse($this->request->headers->get('authorization'));
 
-		$this->config->setValidationConstraints(
-			new \Lcobucci\JWT\Validation\Constraint\PermittedFor($this->request->headers->get('host')),
-			new \Lcobucci\JWT\Validation\Constraint\IdentifiedBy(getenv('APP_ID')),
-			new \Lcobucci\JWT\Validation\Constraint\SignedWith($this->config->signer(), $this->config->verificationKey()),
-		);
+        $this->config->setValidationConstraints(
+            new \Lcobucci\JWT\Validation\Constraint\PermittedFor($this->request->headers->get('host')),
+            new \Lcobucci\JWT\Validation\Constraint\IdentifiedBy(getenv('APP_ID')),
+            new \Lcobucci\JWT\Validation\Constraint\SignedWith($this->config->signer(), $this->config->verificationKey()),
+        );
 
-		return $token;
+        return $token;
 
-	}
+    }
 
-	public function validate() {
+    public function validate() {
 
-		if ($this->request->headers->has('authorization')) {
+        if ($this->request->headers->has('authorization')) {
 
-			$token = $this->parse();
+            $token = $this->parse();
 
-			$constraints = $this->config->validationConstraints();
+            $constraints = $this->config->validationConstraints();
 
-			try {
+            try {
 
-				$this->config->validator()->assert($token, ...$constraints);
+                $this->config->validator()->assert($token, ...$constraints);
 
-				$this->isValid = true;
+                $this->isValid = true;
 
-			} catch (RequiredConstraintsViolated $E) {
+            } catch (RequiredConstraintsViolated $E) {
 
-				$this->errors = $E->violations();
+                $this->errors = $E->violations();
 
-				$this->isValid = false;
+                $this->isValid = false;
 
-			}
+            }
 
-		} else {
+        } else {
 
-			$this->errors = ["No authorization bearer provided."];
+            $this->errors = ["No authorization bearer provided."];
 
-			$this->isValid = false;
-		}
+            $this->isValid = false;
+        }
 
-		return $this->isValid;
+        return $this->isValid;
 
-	}
+    }
 
 }

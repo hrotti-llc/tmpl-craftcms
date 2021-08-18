@@ -6,22 +6,22 @@ use Craft;
 
 class Module extends \yii\base\Module {
 
-	public function init() {
+    public function init() {
 
-		Craft::setAlias('@modules', __DIR__);
+        Craft::setAlias('@modules', __DIR__);
 
-		if (Craft::$app->getRequest()->getIsConsoleRequest()) {
+        if (Craft::$app->getRequest()->getIsConsoleRequest()) {
 
-			$this->controllerNamespace = 'modules\\console\\controllers';
+            $this->controllerNamespace = 'modules\\console\\controllers';
 
-		} else {
+        } else {
 
-			$this->controllerNamespace = 'modules\\controllers';
+            $this->controllerNamespace = 'modules\\controllers';
 
-		}
+        }
 
-		parent::init();
+        parent::init();
 
-	}
+    }
 
 }

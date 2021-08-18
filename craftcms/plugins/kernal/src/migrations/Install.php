@@ -10,18 +10,18 @@ use craft\records\FieldGroup;
 
 class Install extends Migration {
 
-	public function safeUp() {
-		
-		return true;
+    public function safeUp() {
+        
+        return true;
 
-	}
+    }
 
-	public function safeDown() {
+    public function safeDown() {
 
-		return true;
+        return true;
 
-	}
-	
+    }
+    
 
 
 }

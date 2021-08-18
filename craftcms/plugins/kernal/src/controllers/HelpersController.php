@@ -12,44 +12,44 @@ use yii\base\Event;
 
 class HelpersController extends \hrotti\kernal\helpers\BaseController {
 
-	/**
-	 * actionTags
-	 *
-	 * @return mixed
-	 */
-	public function actionTags() : mixed {
-		
-		switch ($this->request->method) {
+    /**
+     * actionTags
+     *
+     * @return mixed
+     */
+    public function actionTags() : mixed {
+        
+        switch ($this->request->method) {
 
-			case 'GET':
+            case 'GET':
 
-				$result = $this->service->GET($this, 'tags');
-				break;
+                $result = $this->service->GET($this, 'tags');
+                break;
 
-		}
+        }
 
-		return $result;
+        return $result;
 
-	}
+    }
 
-	/**
-	 * actionCategories
-	 *
-	 * @return mixed
-	 */
-	public function actionCategories() : mixed {
-		
-		switch ($this->request->method) {
+    /**
+     * actionCategories
+     *
+     * @return mixed
+     */
+    public function actionCategories() : mixed {
+        
+        switch ($this->request->method) {
 
-			case 'GET':
+            case 'GET':
 
-				$result = $this->service->GET($this, 'categories');
-				break;
+                $result = $this->service->GET($this, 'categories');
+                break;
 
-		}
+        }
 
-		return $result;
+        return $result;
 
-	}
+    }
 
 }

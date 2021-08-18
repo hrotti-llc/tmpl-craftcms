@@ -1,9 +1,9 @@
 {
-	"buttons": ["html", "bold", "italic", "link"],
-	"toolbarFixed": true,
-	"minHeight": 50,
-	"paragraphize": false,
-	"replaceDivs": false,
-	"linebreaks": true,
-	"enterKey": false
+    "buttons": ["html", "bold", "italic", "link"],
+    "toolbarFixed": true,
+    "minHeight": 50,
+    "paragraphize": false,
+    "replaceDivs": false,
+    "linebreaks": true,
+    "enterKey": false
 }

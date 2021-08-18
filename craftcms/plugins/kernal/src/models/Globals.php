@@ -13,38 +13,38 @@ use craft\db\Query;
 
 class Globals extends Entry {
 
-	use \hrotti\kernal\helpers\CommonModelHelper;
+    use \hrotti\kernal\helpers\CommonModelHelper;
 
-	public function rules() {
+    public function rules() {
 
-		return [
-			[[], 'safe']
-		];
+        return [
+            [[], 'safe']
+        ];
 
-	}
+    }
 
-	static public function query(
-		$handle = 'basics', 
-		$filters = null
-	) {
+    static public function query(
+        $handle = 'basics', 
+        $filters = null
+    ) {
 
-		$globals = $entries ?? self::$plugin->helpers->globals();
-		$query = $globals->with([])->handle($handle);
+        $globals = $entries ?? self::$plugin->helpers->globals();
+        $query = $globals->with([])->handle($handle);
 
-		return $query;
+        return $query;
 
-	}
+    }
 
-	static public function normalizeEntry(
-		object $entry
-	) {
+    static public function normalizeEntry(
+        object $entry
+    ) {
 
-		$item = [
+        $item = [
 
-		];
+        ];
 
-		return $item;
-	
-	}
+        return $item;
+    
+    }
 
 }

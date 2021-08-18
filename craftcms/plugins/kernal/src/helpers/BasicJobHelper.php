@@ -6,67 +6,67 @@ use Craft;
 
 trait BasicJobHelper {
 
-	public $result = true;
+    public $result = true;
 
-	public $entries;
+    public $entries;
 
-	private $queue;
-	private $plugin;
+    private $queue;
+    private $plugin;
 
-	public function execute(
-		$queue
-	) {
+    public function execute(
+        $queue
+    ) {
 
-		$this->queue = $queue;
+        $this->queue = $queue;
 
-		$this->bootstrap($queue);
-		$this->doJob();
+        $this->bootstrap($queue);
+        $this->doJob();
 
-		return $this->result;
+        return $this->result;
 
-	}
+    }
 
-	public function bootstrap(
-		$queue
-	) {
+    public function bootstrap(
+        $queue
+    ) {
 
-		$this->queue = $queue;
-		$this->plugin = Craft::$app->plugins->getPlugin('kernal');
+        $this->queue = $queue;
+        $this->plugin = Craft::$app->plugins->getPlugin('kernal');
 
-		$this->entries = $this->findEntries();
+        $this->entries = $this->findEntries();
 
-	}
+    }
 
-	public function log(
-		$message, 
-		$level = "info"
-	) {
+    public function log(
+        $message, 
+        $level = "info"
+    ) {
 
-		Craft::$level($message);
-		Craft::getLogger()->flush(true);
+        Craft::$level($message);
+        Craft::getLogger()->flush(true);
 
-	}
+    }
 
-	public function warn(
-		$message
-	) {
+    public function warn(
+        $message
+    ) {
 
-		$this->log($message, 'warning');
+        $this->log($message, 'warning');
 
-	}
+    }
 
-	public function getCfg() {
+    public function getCfg() {
 
-		return $this->plugin->settings;
+        return $this->plugin->settings;
 
-	}
+    }
 
-	protected function doJob() {
+    protected function doJob() {
 
-	}
+    }
 
-	protected function findEntries() {
+    protected function findEntries() {
 
-	}
+    }
 
 }

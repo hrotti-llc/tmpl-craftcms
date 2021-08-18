@@ -52,7 +52,7 @@
     "optimize-autoloader": true,
     "platform": {
       "php": "7.4"
-		},
+        },
     "vendor-dir": "craftcms/vendor"
     
   },

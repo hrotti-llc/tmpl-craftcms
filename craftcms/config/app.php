@@ -2,28 +2,28 @@
 
 
 return [
-	
-	'modules' => [
-		'my-module' => \modules\Module::class,
-	],
+    
+    'modules' => [
+        'my-module' => \modules\Module::class,
+    ],
 
-	'components' => [
+    'components' => [
 
-		'mutex' => function() {
+        'mutex' => function() {
 
-			$config = craft\helpers\App::mutexConfig();
-			$config['isWindows'] = true;
+            $config = craft\helpers\App::mutexConfig();
+            $config['isWindows'] = true;
 
-			return Craft::createObject($config);
-			
-		},
+            return Craft::createObject($config);
+            
+        },
 
-		'queue' => [
+        'queue' => [
 
-			'ttr' => 1800,
+            'ttr' => 1800,
 
-		],
-		
-	],
+        ],
+        
+    ],
 
 ];

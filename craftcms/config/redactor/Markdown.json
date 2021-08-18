@@ -1,6 +1,6 @@
 {
-	"buttons": ["html"],
-	"plugins": ["fullscreen"],
-	"linkNewTab": true,
-	"toolbarFixed": true
+    "buttons": ["html"],
+    "plugins": ["fullscreen"],
+    "linkNewTab": true,
+    "toolbarFixed": true
 }
