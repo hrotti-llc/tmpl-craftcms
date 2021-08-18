@@ -8,7 +8,12 @@ trait BaseHelper {
 
 	private $_plugin;
 
-	public function getPlugin() {
+	/**
+	 * getPlugin
+	 *
+	 * @return \craft\base\Plugin
+	 */
+	public function getPlugin() : \craft\base\Plugin {
 
 		if (!$this->_plugin) $this->_plugin = Craft::$app->plugins->getPlugin('kernal');
 
@@ -16,8 +21,15 @@ trait BaseHelper {
 
 	}
 
+	/**
+	 * setPlugin
+	 *
+	 * @param \craft\base\Plugin $plugin 
+	 *
+	 * @return void
+	 */
 	public function setPlugin(
-		$plugin
+		\craft\base\Plugin $plugin
 	) {
 
 		$this->_plugin = $plugin;

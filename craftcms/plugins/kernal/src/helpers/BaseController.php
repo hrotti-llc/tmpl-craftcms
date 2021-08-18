@@ -16,7 +16,12 @@ trait BaseControllerTrait {
 
 	private $_service;
 
-	public function getService() {
+	/**
+	 * getService
+	 *
+	 * @return \craft\base\Component
+	 */
+	public function getService() : \craft\base\Component {
 
 		if (!$this->_service && $this->service_name) {
 			
@@ -30,15 +35,27 @@ trait BaseControllerTrait {
 
 	}
 
+	/**
+	 * setService
+	 *
+	 * @param \craft\base\Component $service 
+	 *
+	 * @return void
+	 */
 	public function setService(
-		$service
+		\craft\base\Component $service
 	) {
 
 		$this->_service = $service;
 
 	}
 
-	public function actionIndex() {
+	/**
+	 * actionIndex
+	 *
+	 * @return mixed
+	 */
+	public function actionIndex() : mixed {
 		
 		switch ($this->request->method) {
 

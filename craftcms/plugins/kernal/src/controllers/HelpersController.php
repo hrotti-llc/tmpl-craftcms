@@ -12,7 +12,12 @@ use yii\base\Event;
 
 class HelpersController extends \hrotti\kernal\helpers\BaseController {
 
-	public function actionTags() {
+	/**
+	 * actionTags
+	 *
+	 * @return mixed
+	 */
+	public function actionTags() : mixed {
 		
 		switch ($this->request->method) {
 
@@ -27,7 +32,12 @@ class HelpersController extends \hrotti\kernal\helpers\BaseController {
 
 	}
 
-	public function actionCategories() {
+	/**
+	 * actionCategories
+	 *
+	 * @return mixed
+	 */
+	public function actionCategories() : mixed {
 		
 		switch ($this->request->method) {
 

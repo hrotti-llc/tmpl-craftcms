@@ -19,8 +19,15 @@ trait BaseServiceTrait {
 	// Public Methods
 	// =========================================================================
 
-	public function strap(
-		object $plugin
+	/**
+	 * strap
+	 *
+	 * @param \craft\base\Plugin $plugin 
+	 *
+	 * @return void
+	 */
+	function strap(
+		\craft\base\Plugin $plugin
 	) {	
 
 		$this->plugin = $plugin;
@@ -28,9 +35,16 @@ trait BaseServiceTrait {
 		$this->setupModels();
 
 	}
-
+	
+	/**
+	 * setupModels
+	 *
+	 * @param array|null $models 
+	 *
+	 * @return void
+	 */
 	public function setupModels(
-		$models = null
+		array $models = null
 	) {
 
 		$models = $models ?? $this->models;
@@ -39,16 +53,24 @@ trait BaseServiceTrait {
 
 	}
 
+	/**
+	 * GET
+	 *
+	 * @param \craft\web\Controller $controller 
+	 * @param string|mixed $slug 
+	 *
+	 * @return \craft\web\Response
+	 */
 	public function GET(
-		$controller,
-		$id = null
-	) {	
+		\craft\web\Controller $controller,
+		string $slug = null
+	) : \craft\web\Response {	
 
 		$result = null;
 
 		if ($this->secureRequest($controller->request)) {
 
-			$result = ($controller->request->getIsGraphql()) ? $this->resolveGQLGet($controller->request, $id) : $this->resolveJSONGet($controller->request, $id);
+			$result = ($controller->request->getIsGraphql()) ? $this->resolveGQLGet($controller->request, $slug) : $this->resolveJSONGet($controller->request, $slug);
 
 		} else {
 
@@ -60,16 +82,24 @@ trait BaseServiceTrait {
 
 	}
 
+	/**
+	 * POST
+	 *
+	 * @param \craft\web\Controller $controller 
+	 * @param string|mixed $slug 
+	 *
+	 * @return \craft\web\Response
+	 */
 	public function POST(
-		$controller,
-		$id = null
-	) {
+		\craft\web\Controller $controller,
+		sting $slug = null
+	) : \craft\web\Response {
 
 		$result = null;
 
 		if ($this->secureRequest($controller->request)) {
 
-			$result = ($controller->request->getIsGraphql()) ? $this->resolveGQLPost($controller->request, $id) : $this->resolveJSONPost($controller->request, $id);
+			$result = ($controller->request->getIsGraphql()) ? $this->resolveGQLPost($controller->request, $slug) : $this->resolveJSONPost($controller->request, $slug);
 
 		} else {
 
@@ -81,16 +111,24 @@ trait BaseServiceTrait {
 
 	}
 
+	/**
+	 * DELETE
+	 *
+	 * @param \craft\web\Controller $controller 
+	 * @param string|null $slug 
+	 *
+	 * @return \craft\web\Response
+	 */
 	public function DELETE(
-		$controller,
-		$id = null
-	) {
+		\craft\web\Controller $controller,
+		string $slug = null
+	) : \craft\web\Response {
 
 		$result = null;
 
 		if ($this->secureRequest($controller->request)) {
 
-			$result = ($controller->request->getIsGraphql()) ? $this->resolveGQLDelete($controller->request, $id) : $this->resolveJSONDelete($controller->request, $id);
+			$result = ($controller->request->getIsGraphql()) ? $this->resolveGQLDelete($controller->request, $slug) : $this->resolveJSONDelete($controller->request, $slug);
 
 		} else {
 
@@ -102,61 +140,113 @@ trait BaseServiceTrait {
 
 	}
 
-	public function getBodyParams() {
+	/**
+	 * getBodyParams
+	 *
+	 * @return array
+	 */
+	public function getBodyParams() : array {
 
 		return Craft::$app->request->getBodyParams();
 
 	}
 
+	/**
+	 * getUser
+	 *
+	 * @param int|null $id 
+	 *
+	 * @return \craft\elements\User
+	 */
 	public function getUser(
-		$id = null
-	) {
+		int $id = null
+	) : \craft\elements\User {
 
-		return ($id !== null) ? null : Craft::$app->getUser()->getIdentity();
+		// TODO: Is this partially implemented? I should be passing an id.
+
+		return ($int !== null) ? null : Craft::$app->getUser()->getIdentity();
 
 	}
 
-	public function getCfg() {
+	/**
+	 * getCfg
+	 *
+	 * @return \craft\base\Model
+	 */
+	public function getCfg() : \craft\base\Model {
 
 		return $this->plugin->settings;
 
 	}
 
+
+
+
+
 	// Protected Methods
 	// =========================================================================
 
+	/**
+	 * resolveGQLGet
+	 *
+	 * @param \craft\web\Request $request 
+	 *
+	 * @return mixed
+	 */
 	protected function resolveGQLGet(
-		Request $request
-	) {
+		\craft\web\Request $request
+	) : mixed {
 
 		return null;
 
 	}
 
+	/**
+	 * resolveGQLPost
+	 *
+	 * @param \craft\web\Request $request 
+	 *
+	 * @return mixed
+	 */
 	protected function resolveGQLPost(
-		Request $request
-	) {
+		\craft\web\Request $request
+	) : mixed {
 
 		return null;
 
 	}
 
+	/**
+	 * resolveGQLDelete
+	 *
+	 * @param \craft\web\Request $request 
+	 *
+	 * @return mixed
+	 */
 	protected function resolveGQLDelete(
-		Request $request
-	) {
+		\craft\web\Request $request
+	) : mixed {
 
 		return null;
 
 	}
 
+	/**
+	 * resolveJSONGet
+	 *
+	 * @param \craft\web\Request $request 
+	 * @param string $slug 
+	 *
+	 * @return mixed
+	 */
 	protected function resolveJSONGet(
-		object $request, 
-		$id
-	) {
+		\craft\web\Request $request, 
+		string $slug
+	) : mixed {
 
 		$result = null;
 
-		switch ($id) {
+		switch ($slug) {
 
 			default:
 
@@ -169,19 +259,37 @@ trait BaseServiceTrait {
 
 	}
 
+	/**
+	 * resolveDefaultJSONGet
+	 *
+	 * @param \craft\web\Request $request 
+	 *
+	 * @return mixed
+	 */
 	protected function resolveDefaultJSONGet(
-		object $request
-	) {
+		\craft\web\Request $request
+	) : mixed {
 
 		return null;
 
 	}
 
-	protected function resolveJSONPost($request, $id) {
+	/**
+	 * resolveJSONPost
+	 *
+	 * @param \craft\web\Request $request 
+	 * @param string $slug 
+	 *
+	 * @return mixed
+	 */
+	protected function resolveJSONPost(
+		\craft\web\Request $request, 
+		string $slug
+	) : mixed {
 
 		$result = null;
 
-		switch ($id) {
+		switch ($slug) {
 
 			default:
 
@@ -194,22 +302,37 @@ trait BaseServiceTrait {
 
 	}
 
+	/**
+	 * resolveDefaultJSONPost
+	 *
+	 * @param \craft\web\Request $request 
+	 *
+	 * @return mixed
+	 */
 	protected function resolveDefaultJSONPost(
-		$request
-	) {
+		\craft\web\Request $request
+	) : mixed {
 
 		return null;
 
 	}
 
+	/**
+	 * resolveJSONDelete
+	 *
+	 * @param \craft\web\Request $request 
+	 * @param string $slug 
+	 *
+	 * @return mixed
+	 */
 	protected function resolveJSONDelete(
-		$request, 
-		$id
-	) {
+		\craft\web\Request $request, 
+		string $slug
+	) : mixed {
 
 		$result = null;
 
-		switch ($id) {
+		switch ($slug) {
 
 			default:
 
@@ -222,17 +345,31 @@ trait BaseServiceTrait {
 
 	}
 
+	/**
+	 * resolveDefaultJSONDelete
+	 *
+	 * @param \craft\web\Request $request 
+	 *
+	 * @return mixed
+	 */
 	protected function resolveDefaultJSONDelete(
-		$request
-	) {
+		\craft\web\Request $request
+	) : mixed {
 
 		return null;
 
 	}
 
+	/**
+	 * secureRequest
+	 *
+	 * @param \craft\web\Request $request 
+	 *
+	 * @return bool
+	 */
 	protected function secureRequest(
-		Request $request
-	) {
+		\craft\web\Request $request
+	) : bool {
 
 		return true;
 
@@ -240,10 +377,18 @@ trait BaseServiceTrait {
 
 	}
 
+	/**
+	 * respond
+	 *
+	 * @param \craft\web\Controller $controller 
+	 * @param string $payload 
+	 *
+	 * @return \craft\web\Response
+	 */
 	protected function respond(
-		$controller, 
-		$payload
-	) {	
+		\craft\web\Controller $controller, 
+		string $payload
+	) : \craft\web\Response {	
 
 		$pretty = false;
 
@@ -253,11 +398,20 @@ trait BaseServiceTrait {
 
 	}
 
+	/**
+	 * respondAsJson
+	 *
+	 * @param \craft\web\Controller $controller 
+	 * @param string $payload 
+	 * @param bool $pretty 
+	 *
+	 * @return \craft\web\Response
+	 */
 	protected function respondAsJson(
-		$controller, 
-		$payload,
-		$pretty = false
-	) {
+		\craft\web\Controller $controller, 
+		string $payload,
+		bool $pretty = false
+	) : \craft\web\Response {
 		
 		if ($pretty) $payload = '<pre>'. json_encode($payload, JSON_PRETTY_PRINT) . '</pre>';
 
@@ -268,8 +422,15 @@ trait BaseServiceTrait {
 	
 	}
 
+	/**
+	 * setStatus
+	 *
+	 * @param int $code 
+	 *
+	 * @return void
+	 */
 	protected function setStatus(
-		$code
+		int $code
 	) {
 
 		Craft::$app->getResponse()->setStatusCode($code);
