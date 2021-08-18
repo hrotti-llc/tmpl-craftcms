@@ -194,13 +194,18 @@ trait BaseServiceTrait {
 
 	}
 
-	protected function resolveDefaultJSONPost($request) {
+	protected function resolveDefaultJSONPost(
+		$request
+	) {
 
 		return null;
 
 	}
 
-	protected function resolveJSONDelete($request, $id) {
+	protected function resolveJSONDelete(
+		$request, 
+		$id
+	) {
 
 		$result = null;
 
@@ -217,7 +222,9 @@ trait BaseServiceTrait {
 
 	}
 
-	protected function resolveDefaultJSONDelete($request) {
+	protected function resolveDefaultJSONDelete(
+		$request
+	) {
 
 		return null;
 
@@ -261,7 +268,9 @@ trait BaseServiceTrait {
 	
 	}
 
-	protected function setStatus($code) {
+	protected function setStatus(
+		$code
+	) {
 
 		Craft::$app->getResponse()->setStatusCode($code);
 		

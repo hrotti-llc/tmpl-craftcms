@@ -30,7 +30,9 @@ trait BaseControllerTrait {
 
 	}
 
-	public function setService($service) {
+	public function setService(
+		$service
+	) {
 
 		$this->_service = $service;
 

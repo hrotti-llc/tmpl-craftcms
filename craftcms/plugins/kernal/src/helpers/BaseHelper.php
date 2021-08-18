@@ -16,7 +16,9 @@ trait BaseHelper {
 
 	}
 
-	public function setPlugin($plugin) {
+	public function setPlugin(
+		$plugin
+	) {
 
 		$this->_plugin = $plugin;
 

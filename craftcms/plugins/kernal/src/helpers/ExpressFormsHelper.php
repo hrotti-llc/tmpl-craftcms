@@ -18,7 +18,9 @@ trait ExpressFormsHelper {
 
 	}
 
-	function getFormHash($updateSession = true) {
+	function getFormHash(
+		$updateSession = true
+	) {
 
 		$prefix = PreventDuplicateSubmissionsDecorator::PREFIX;
 		$hash = Craft::$app->plugins->getPlugin('express-forms')->container->get('Solspace\ExpressForms\providers\Security\HashingInterface')->getUuid4();

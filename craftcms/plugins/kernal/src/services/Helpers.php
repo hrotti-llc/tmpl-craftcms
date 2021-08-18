@@ -28,12 +28,24 @@ class Helpers extends \hrotti\kernal\helpers\CommonService {
 	// Public Methods
 	// =========================================================================
 
+
+
+	/**
+	 * globals
+	 *
+	 * @param int $limit 
+	 * @param int $page 
+	 * @param array $status 
+	 * @param mixed $filters 
+	 *
+	 * @return \craft\elements\db\GlobalSetQuery
+	 */
 	public function globals(
-		$limit = 20, 
-		$page=1, 
-		$status = ['live'], 
-		$filters = []
-	) {
+		int $limit = 20, 
+		int $page = 1, 
+		array $status = ['live'], 
+		mixed $filters = null
+	) : \craft\elements\db\GlobalSetQuery {
 
 		$query = new GlobalSetQuery(GlobalSet::class);
 
@@ -44,9 +56,24 @@ class Helpers extends \hrotti\kernal\helpers\CommonService {
 
 	}
 
-	public function tags($limit = 20, $page=1, $status = ['live'], $filters = null) {
 
-		// if (is_string($group)) $group = Craft::$app->tags->getTagGroupByHandle($group)->id;
+
+	/**
+	 * tags
+	 *
+	 * @param int $limit 
+	 * @param int $page 
+	 * @param array $status 
+	 * @param mixed $filters 
+	 *
+	 * @return \craft\elements\db\TagQuery
+	 */
+	public function tags(
+		$limit = 20, 
+		$page = 1, 
+		$status = ['live'], 
+		$filters = null
+	) : \craft\elements\db\TagQuery {
 
 		$query = new TagQuery(Tag::class);
 
@@ -59,12 +86,24 @@ class Helpers extends \hrotti\kernal\helpers\CommonService {
 
 	}
 
+
+
+	/**
+	 * categories
+	 *
+	 * @param int $limit 
+	 * @param int $page 
+	 * @param array $status 
+	 * @param mixed $filters 
+	 *
+	 * @return \craft\elements\db\TagQuery
+	 */
 	public function categories(
-		$limit = 20, 
-		$page=1, 
-		$status = ['live'], 
-		$filters = null
-	) {
+		int $limit = 20, 
+		int $page = 1, 
+		array $status = ['live'], 
+		mixed $filters = null
+	) : \craft\elements\db\TagQuery {
 
 		// if (is_string($group)) $group = Craft::$app->tags->getTagGroupByHandle($group)->id;
 
@@ -79,15 +118,26 @@ class Helpers extends \hrotti\kernal\helpers\CommonService {
 
 	}
 
+
+
 	public function csrf() {
 
 		return $this->getCsrfBasics();
 
 	}
 
+
+
+	/**
+	 * resolveFilters
+	 *
+	 * @param \craft\web\Request $request 
+	 *
+	 * @return array
+	 */
 	public function resolveFilters(
-		$request
-	) {
+		\craft\web\Request $request
+	) : array {
 
 		$ignore = ['limit', 'page'];
 
@@ -110,6 +160,9 @@ class Helpers extends \hrotti\kernal\helpers\CommonService {
 	}
 
 
+
+
+	
 	// Protected Methods
 	// =========================================================================
 
@@ -136,7 +189,7 @@ class Helpers extends \hrotti\kernal\helpers\CommonService {
 	protected function normalizeCategoriesQueryFilters(
 		$query, 
 		$filters
-		) {
+	) {
 
 		foreach($filters as $name => $value) {
 

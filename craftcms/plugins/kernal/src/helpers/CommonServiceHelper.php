@@ -38,7 +38,10 @@ class CommonService extends \hrotti\kernal\helpers\BaseService {
 
 	}
 
-	public function getCategories($keywords, $group) {
+	public function getCategories(
+		$keywords, 
+		$group
+	) {
 
 		if (is_string($group)) $group = Craft::$app->categories->getGroupByHandle($group)->id;
 
@@ -51,7 +54,10 @@ class CommonService extends \hrotti\kernal\helpers\BaseService {
 
 	}
 
-	public function getCategoryIds($keywords, $group) {
+	public function getCategoryIds(
+		$keywords, 
+		$group
+	) {
 
 		return array_map(
 			function($item) { return $item->id; },
@@ -61,7 +67,10 @@ class CommonService extends \hrotti\kernal\helpers\BaseService {
 	}
 
 
-	public function getTags($keywords, $group) {
+	public function getTags(
+		$keywords, 
+		$group
+	) {
 
 		if (is_string($group)) $group = Craft::$app->tags->getTagGroupByHandle($group)->id;
 
@@ -75,7 +84,10 @@ class CommonService extends \hrotti\kernal\helpers\BaseService {
 
 	}
 
-	public function getTagIds($keywords, $group) {
+	public function getTagIds(
+		$keywords, 
+		$group
+	) {
 
 		return array_map(
 			function($item) { return $item->id; },
@@ -84,7 +96,10 @@ class CommonService extends \hrotti\kernal\helpers\BaseService {
 
 	}
 
-	public function createOrGetTag($keyword, $group) {
+	public function createOrGetTag(
+		$keyword, 
+		$group
+	) {
 
 		if (is_string($group)) $group = Craft::$app->tags->getTagGroupByHandle($group)->id;
 
@@ -110,7 +125,9 @@ class CommonService extends \hrotti\kernal\helpers\BaseService {
 
 	}
 
-	public function resolveFilters($request) {
+	public function resolveFilters(
+		$request
+	) {
 
 		$ignore = [];
 
@@ -125,7 +142,11 @@ class CommonService extends \hrotti\kernal\helpers\BaseService {
 
 	}
 
-	public function resolveCommonFilters($request, $limit = -1, $page = 1) {
+	public function resolveCommonFilters(
+		$request, 
+		$limit = -1, 
+		$page = 1
+	) {
 
 		$ignore = ['limit', 'page'];
 
@@ -146,7 +167,9 @@ class CommonService extends \hrotti\kernal\helpers\BaseService {
 
 	}
 	
-	public function normalizeSortingCriteria($criteria) {
+	public function normalizeSortingCriteria(
+		$criteria
+	) {
 		
 		return array_column(array_map(function ($value) {
 

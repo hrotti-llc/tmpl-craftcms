@@ -13,7 +13,9 @@ trait BasicJobHelper {
 	private $queue;
 	private $plugin;
 
-	public function execute($queue) {
+	public function execute(
+		$queue
+	) {
 
 		$this->queue = $queue;
 
@@ -24,7 +26,9 @@ trait BasicJobHelper {
 
 	}
 
-	public function bootstrap($queue) {
+	public function bootstrap(
+		$queue
+	) {
 
 		$this->queue = $queue;
 		$this->plugin = Craft::$app->plugins->getPlugin('kernal');

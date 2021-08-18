@@ -109,7 +109,10 @@ trait CommonModelHelper {
 
 	}
 
-	static public function normalizeDate($timestamp, $tz = null) {
+	static public function normalizeDate(
+		$timestamp, 
+		$tz = null
+	) {
 
 		$times = [
 			'datestamp' => null,
@@ -141,7 +144,10 @@ trait CommonModelHelper {
 
 	}
 
-	static public function normalizeTime($timestamp, $tz = null) {
+	static public function normalizeTime(
+		$timestamp, 
+		$tz = null
+	) {
 
 		$times = [
 			'timestamp' => null,
