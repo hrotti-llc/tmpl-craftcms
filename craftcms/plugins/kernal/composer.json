@@ -9,7 +9,7 @@
         "craftcms",
         "craft-plugin"
     ],
-    "license": "Mozilla Public License Version 2.0",
+    "license": "MPL-2.0",
     "authors": [
         {
             "name": "Jesse Finn",
