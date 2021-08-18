@@ -1,0 +1,6 @@
+*.php filter=tabspace
+*.py filter=tabspace
+*.html filter=tabspace
+*.css filter=tabspace
+*.scss filter=tabspace
+*.json filter=tabspace
