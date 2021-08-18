@@ -15,8 +15,6 @@ use craft\events\RegisterUrlRulesEvent;
 
 use yii\base\Event;
 
-use hrotti\kernal\services\Metadata as MetadataService;
-
 class Kernal extends Plugin {
 
 	static public $plugin;
@@ -33,16 +31,10 @@ class Kernal extends Plugin {
 
 	}
 
-	// protected function createSettingsModel() {
-
-	// 	return new Settings();
-
-	// }
-
 	protected function bindComponents() {
 
 		return $this->setComponents([
-			'metadata' => MetadataService::class,
+			'helpers' => hrotti\kernal\services\Helpers::class,
 		]);
 
 	}
@@ -63,8 +55,16 @@ class Kernal extends Plugin {
 			
 			function (RegisterUrlRulesEvent $event) {
 
-				$event->rules['api/kernal/metadata'] = 'kernal/metadata';
-
+				$event->rules['api/kernal/helpers/csrf'] = 'kernal/helpers/csrf';
+		
+				$event->rules['api/kernal/helpers/tags'] = 'kernal/helpers/tags';
+				$event->rules['api/kernal/helpers/tags/<limit:[0-9]+>'] = 'kernal/helpers/tags';
+				$event->rules['api/kernal/helpers/tags/<limit:[0-9]+>,<page:[0-9]+>'] = 'kernal/helpers/tags';
+		
+				$event->rules['api/kernal/helpers/categories'] = 'kernal/helpers/categories';
+				$event->rules['api/kernal/helpers/categories/<limit:[0-9]+>'] = 'kernal/helpers/categories';
+				$event->rules['api/kernal/helpers/categories/<limit:[0-9]+>,<page:[0-9]+>'] = 'kernal/helpers/categories';
+				
 			}
 	
 		);

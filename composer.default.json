@@ -23,9 +23,9 @@
     "venveo/craft-redactor-split": "^1.1.0",
     "verbb/redactor-tweaks": "^2.0.4",
 
-    "hrotti/kernal": "^1.0.1",
-
-    "spicyweb/craft-neo": "^2.9.5"
+    "lcobucci/jwt": "4.1.4",
+    
+    "hrotti/kernal": "^1.0.1"
     
   },
 

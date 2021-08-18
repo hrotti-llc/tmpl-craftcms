@@ -1,6 +1,6 @@
 {
     "name": "hrotti/kernal",
-    "description": "This is the internal plugin for this project. Not for public distribution.",
+    "description": "This is intended as a basic set of tools for plugin development.",
     "type": "craft-plugin",
     "version": "1.0.2",
     "keywords": [
@@ -9,7 +9,7 @@
         "craftcms",
         "craft-plugin"
     ],
-    "license": "MIT",
+    "license": "Mozilla Public License Version 2.0",
     "authors": [
         {
             "name": "Jesse Finn",

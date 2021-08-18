@@ -1,6 +1,6 @@
 <?php
 
-namespace hrotti\poleconnect\helpers;
+namespace hrotti\kernal\helpers;
 
 use Craft;
 
@@ -9,7 +9,10 @@ trait CommonModelHelper {
 	static public $section;
 	static public $plugin;
 
-	public function __construct($data = null, $normalize = false) {
+	public function __construct(
+		$data = null, 
+		$normalize = false
+	) {
 
 		self::strap($this->section);
 
@@ -19,15 +22,19 @@ trait CommonModelHelper {
 
 	}
 
-	static public function strap($sectionHandle = null) {
+	static public function strap(
+		$sectionHandle = null
+	) {
 
-		self::$plugin = self::$plugin ?? Craft::$app->plugins->getPlugin('poleconnect');
+		self::$plugin = self::$plugin ?? Craft::$app->plugins->getPlugin('kernal');
 
 		if ($sectionHandle != null) self::$section = self::$section ?? Craft::$app->sections->getSectionByHandle($sectionHandle);
 
 	}
 
-	static public function normalizeEntries(&$entries) {
+	static public function normalizeEntries(
+		&$entries
+	) {
 
 		$results = [];
 
@@ -37,7 +44,9 @@ trait CommonModelHelper {
 
 	}
 
-	static public function normalizeAsset($field) {
+	static public function normalizeAsset(
+		$field
+	) {
 
 		$result = null;
 
@@ -53,36 +62,9 @@ trait CommonModelHelper {
 
 	}
 
-	static public function normalizePrice($amount, $from = "USD", $to = null) {
-
-		$price = null;
-
-		if ($amount) {
-			
-			$prices = self::$plugin->currencies->convert($from ?? "USD", Craft::$app->request->get('currency') ?? 'USD', $amount);;
-			$price = $prices[$to ?? Craft::$app->request->get('currency') ?? "USD"];
-
-		}
-
-		return $price;
-
-	}
-
-	static public function normalizePrices($amount, $from = "USD", $to = null) {
-
-		$prices = null;
-
-		if ($amount) {
-			
-			$prices = self::$plugin->currencies->convert($from ?? "USD", $to ?? Craft::$app->request->get('currency') ?? 'USD', $amount);
-
-		}
-
-		return $prices;
-
-	}
-
-	static public function normalizePhone($field) {
+	static public function normalizePhone(
+		$field
+	) {
 
 		$result = null;
 
@@ -99,7 +81,9 @@ trait CommonModelHelper {
 
 	}
 
-	static public function normalizeAddress($field) {
+	static public function normalizeAddress(
+		$field
+	) {
 
 		$result = null;
 
@@ -125,62 +109,77 @@ trait CommonModelHelper {
 
 	}
 
-	static public function normalizeCurrency($field) {
+	static public function normalizeDate($timestamp, $tz = null) {
 
-		$result = null;
+		$times = [
+			'datestamp' => null,
+			'utc' => ['date' => null],
+			'local' => ['date' => null],
+		];
 
-		if ($field != null) {
+		if ($timestamp != null) {
 
-			return $field['currencyCode'];
+			$datetime = (new \DateTime('@' . $timestamp));
 
-		}
+			$times['utc']['date'] = $datetime->format('Y-m-d');
+			$times['utc']['datestamp'] = intval($datetime->setTime(0, 0)->getTimestamp());
 
-		return $result;
+			if ($tz != null) {
 
-	}
+				$datetime = $datetime->setTimezone(new \DateTimeZone($tz));
 
-	static public function normalizeWebPresence($field) {
-
-		$result = null;
-
-		if ($field != null) {
-
-			$result = [];
-
-			foreach ($field as $media) {
-
-				switch ($media->getGqlTypeName()) {
-
-					case 'webPresence_btFacebook_BlockType':
-						$result['facebook'] = $media->mediaURL;
-						break;
-
-					case 'webPresence_btInstagram_BlockType':
-						$result['instagram'] = $media->mediaHandle;
-						break;
-
-					case 'webPresence_btYoutube_BlockType':
-						$result['youtube'] = $media->mediaURL;
-						break;
-
-					case 'webPresence_btWebsite_BlockType':
-						$result['website'] = $media->mediaURL;
-						break;
-
-					case 'webPresence_btAffiliate_BlockType':
-						$result['affiliate'] = [
-							'url' => $media->affiliateURL,
-							'code' => $media->affiliateCode
-						];
-						break;
-
-				}
+				$times['local']['date'] = $datetime->format('Y-m-d');
+				$times['local']['datestamp'] = intval($datetime->setTime(0, 0)->getTimestamp());
 
 			}
 
+			$times['datestamp'] = $times['utc']['datestamp'];
+
 		}
 
-		return $result;
+		return $times;
+
+	}
+
+	static public function normalizeTime($timestamp, $tz = null) {
+
+		$times = [
+			'timestamp' => null,
+			'datestamp' => null,
+			'utc' => ['date' => null, 'time' => null, 'seconds' => null, 'datetime' => null],
+			'local' => ['date' => null, 'time' => null, 'seconds' => null, 'datetime' => null],
+		];
+
+		if ($timestamp != null) {
+
+			$datetime = (new \DateTime('@' . $timestamp, new \DateTimeZone('ETC/UTC')));
+			[$h, $m, $s] = explode(':', $datetime->format('H:i:s.u'));
+
+			$times['utc']['date'] = $datetime->format('Y-m-d');
+			$times['utc']['time'] = $datetime->format('H:i:s');
+			$times['utc']['datetime'] = $datetime->format('Y-m-d H:i:s');
+			$times['utc']['seconds'] = ($h * 3600) + ($m * 60) + $s;
+			$times['utc']['datestamp'] = intval($datetime->setTime(0, 0)->getTimestamp());
+
+			if ($tz != null) {
+
+				$datetime = (new \DateTime('@' . $timestamp, new \DateTimeZone('ETC/UTC')))->setTimezone(new \DateTimeZone($tz));
+				[$h, $m, $s] = explode(':', $datetime->format('H:i:s.u'));
+
+				$times['local']['date'] = $datetime->format('Y-m-d');
+				$times['local']['time'] = $datetime->format('H:i:s');
+				$times['local']['datetime'] = $datetime->format('Y-m-d H:i:s');
+				$times['local']['seconds'] = ($h * 3600) + ($m * 60) + $s;
+				$times['local']['datestamp'] = intval($datetime->setTime(0, 0)->getTimestamp());
+
+			}
+
+			$times['timestamp'] = intval($timestamp);
+			$times['datestamp'] = $times['utc']['datestamp'];
+
+		}
+
+		return $times;
 
 	}
 

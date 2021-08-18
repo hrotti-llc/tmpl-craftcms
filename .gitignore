@@ -1,0 +1,25 @@
+
+# Craft CMS
+
+/**/public/cpresources
+/**/craftcms/storage
+/**/craftcms/vendor
+/**/craftcms/config/project
+/**/craftcms/config/license.key
+/**/craftcms/.env
+
+/composer.lock
+/src/composer.lock
+npm-debug.log
+
+# General Files
+
+db-*.dump
+db-*.gz
+*.sql.gz
+
+# Development Environments
+
+/node_modules
+/.vscode
+package-lock.json

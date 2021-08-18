@@ -3,7 +3,7 @@
   "name": "hrotti/craft",
   "description": "Craft CMS Scaffolding Template",
   "keywords": [],
-  "license": "Unlicense",
+  "license": "Mozilla Public License Version 2.0",
   "type": "project",
   "support": {},
 
@@ -30,9 +30,9 @@
     "venveo/craft-redactor-split": "^1.1.0",
     "verbb/redactor-tweaks": "^2.0.4",
 
-    "hrotti/kernal": "^1.0.1",
-
-    "spicyweb/craft-neo": "^2.9.5"
+    "lcobucci/jwt": "4.1.4",
+    
+    "hrotti/kernal": "^1.0.1"
     
   },
 
@@ -66,7 +66,7 @@
   "scripts": {
     "post-create-project-cmd": [
 
-      "@php -r \"copy('craftcms/.env.example', 'craftcms/.env');\"",
+      "@php -r \"copy('craftcms/.example.env', 'craftcms/.env');\"",
       "@php -r \"unlink('composer.json');\"",
       "@php -r \"unlink('LICENSE.md');\"",
       "@php -r \"unlink('public/cpresources/.gitkeep');\"",
@@ -77,9 +77,9 @@
       "@php -r \"chmod('composer.json', 0774);\"",
       "@php -r \"chmod('composer.lock', 0774);\"",
       "@php -r \"chmod('craftcms/config/license.key', 0774);\"",
-      "@php -r \"chmod('craftcms/storage/*', 0774);\"",
-      "@php -r \"chmod('craftcms/vendor/*', 0774);\"",
-      "@php -r \"chmod('public/cpresources/*', 0774);\"",
+      "@php -r \"chmod('craftcms/storage', 0774);\"",
+      "@php -r \"chmod('craftcms/vendor', 0774);\"",
+      "@php -r \"chmod('public/cpresources', 0774);\"",
 
       "@composer dump-autoload -o",
       "@php craftcms/craft setup/welcome"

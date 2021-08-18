@@ -17,6 +17,12 @@ return [
 			return Craft::createObject($config);
 			
 		},
+
+		'queue' => [
+
+			'ttr' => 1800,
+
+		],
 		
 	],
 
